@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Drawing Area</title>
+<!-- You can add your style here rather than in an external style sheet. -->
+	<style>
+		canvas {
+			border:5px solid #d3d3d3;
+	    	background-color: #f1f1f1;
+	    	display: block;
+		}
+	</style>
+</head>
+<body>
+    <!-- DO NOT MODIFY THIS HTML -->
+    <canvas id = "myCanvas" width = "350" height = "500"  ></canvas>
+	<input type = "color" id = "picker"/>
+	
+<script>
+	var canvas = document.querySelector("#myCanvas");
+	var ctx = canvas.getContext("2d");
+	var color = "red"
+	var stop = false;
+	canvas.width = window.innerWidth*.8;
+	canvas.height = window.innerHeight*.8;
+	ctx.fillStyle = color;
+
+	function draw(posX, posY){
+		if (stop == false){
+    		console.log("drawing")
+    		ctx.beginPath();
+    		ctx.fillStyle = color;
+    		ctx.arc(posX, posY, 10, 0, 2 * Math.PI);
+    		ctx.fill();
+		}
+	}
+
+	window.addEventListener(
+		'mousemove', function (e){
+		console.log(e.x);
+		console.log(e.y);
+		draw(e.x, e.y)
+	})
+
+	window.addEventListener(
+		'keydown', function (e){
+		console.log(e);
+		if (e.key == 'r') {
+			color = "red";
+		}
+		if (e.key == 'g') {
+			color = "green";
+		}
+		if (e.key == 'b') {
+			color = "blue";
+		}
+		if (e.key == 'y') {
+			color = "yellow";
+		}
+		if (e.key == " ") {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+		}
+		if (e.key == 38) {
+			stop = true;
+		}
+		if (e.key == 40) {
+			stop = false;
+		}
+	})
+
+	document.querySelector("#picker").addEventListener(
+		'change', function(e){
+		console.log(this.value)
+		color = this.value;
+	})
+</script>	
+</body>
+</html>
